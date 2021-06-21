@@ -1,0 +1,9 @@
+.createUser{
+  display: flex;
+  justify-content: center;
+  margin: 10%;
+}
+
+.tittle{
+  padding: 5%;
+}
