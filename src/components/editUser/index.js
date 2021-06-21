@@ -10,10 +10,12 @@ import {  changeActive, changeDateOfAdmision, changeEmail,
 import Header from '../header/index'
 import { useParams } from "react-router"
 import { getUser } from '../../store/createUserReducer'
+import { useHistory } from 'react-router-dom'
 
 
 export default function EditUser(){
 
+  const history = useHistory()
   const dispatch = useDispatch()
   const { userId } = useParams()
 
@@ -52,6 +54,7 @@ export default function EditUser(){
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: "/users/editUser",
         data: {
+          _id: userId,
           email,
           password,
           name,
@@ -66,6 +69,8 @@ export default function EditUser(){
           Authorization: `Bearer ${token}`,
         },
       })
+      alert('Los cambios se han realizado exitosamente')
+      history.push("/userlist")
     } catch(error){
       dispatch(changeError(error.message))
     }
