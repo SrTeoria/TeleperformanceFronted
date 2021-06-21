@@ -41,7 +41,9 @@ export default function Login(){
       } else if (data.userKind === "user" && data.userState === "activo") {
         history.push("/contents")
       } else {
-        history.push("/")
+        alert('Tu estado es inactivo, no puedes iniciar sesion')
+        dispatch(changeEmail(''))
+        dispatch(changePassword(''))
       }
     } catch(error){
       dispatch(changeError(error.message))
