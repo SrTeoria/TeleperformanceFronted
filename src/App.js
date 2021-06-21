@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { Router, Route, Switch, Redirect } from "react-router-dom"
+import { history } from './utils/history'
+import  Login  from './components/login/index'
+import CreateUser from './components/createUser'
+import Contents from './components/contents'
+import UserList from './components/userList'
+import EditUser from './components/editUser'
+
+
+function PrivateRoute({ children, ...rest }) {
+
+  const token = localStorage.getItem("token")
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        return token ? children : <Redirect to="/" />;
+      }}
+    />
+  );
+}
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <Switch>
+            <PrivateRoute exact path='/createuser'>
+              <CreateUser/>
+            </PrivateRoute>
+            <PrivateRoute exact path='/contents'>
+              <Contents/>
+            </PrivateRoute>
+            <PrivateRoute exact path='/userlist'>
+              <UserList/>
+            </PrivateRoute>
+            <PrivateRoute exact path='/edituser/:userId'>
+              <EditUser/>
+            </PrivateRoute>
+          <Route exact path='/'>
+            <Login/>
+          </Route>
+      </Switch>
+    </Router>
   );
 }
 
