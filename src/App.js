@@ -8,14 +8,35 @@ import UserList from './components/userList'
 import EditUser from './components/editUser'
 
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRouteAdmin({ children, ...rest }) {
 
-  const token = localStorage.getItem("token")
+  const userKind = localStorage.getItem("userKind")
   return (
     <Route
       {...rest}
       render={() => {
-        return token ? children : <Redirect to="/" />;
+        return userKind ==='admin' ? children :
+        <>
+          {alert('No tienes permisos para entrar a este sitio')}
+          <Redirect to="/contents" />
+        </>
+      }}
+    />
+  )
+}
+
+function PrivateRouteUser({ children, ...rest }) {
+
+  const userKind = localStorage.getItem("userKind")
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        return userKind ==='user' ? children :
+        <>
+          {alert('No tienes permisos para entrar a este sitio')}
+          <Redirect to="/createuser" />
+        </>
       }}
     />
   );
@@ -25,18 +46,18 @@ function App() {
   return (
     <Router history={history}>
       <Switch>
-          <PrivateRoute exact path='/createuser'>
+          <PrivateRouteAdmin exact path='/createuser'>
             <CreateUser/>
-          </PrivateRoute>
-          <PrivateRoute exact path='/contents'>
+          </PrivateRouteAdmin>
+          <PrivateRouteUser exact path='/contents'>
             <Contents/>
-          </PrivateRoute>
-          <PrivateRoute exact path='/userlist'>
+          </PrivateRouteUser>
+          <PrivateRouteAdmin exact path='/userlist'>
             <UserList/>
-          </PrivateRoute>
-          <PrivateRoute exact path='/edituser/:userId'>
+          </PrivateRouteAdmin>
+          <PrivateRouteAdmin exact path='/edituser/:userId'>
             <EditUser/>
-          </PrivateRoute>
+          </PrivateRouteAdmin>
           <Route exact path='/'>
             <Login/>
           </Route>
