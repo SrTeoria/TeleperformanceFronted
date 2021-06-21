@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 export default function Login(){
 
   const history = useHistory()
-  const { email, password } = useSelector(({ loginReducer, userReducer }) => ({
+  const { email, password } = useSelector(({ loginReducer }) => ({
     email: loginReducer.email,
     password: loginReducer.password,
     error: loginReducer.error,
@@ -33,11 +33,12 @@ export default function Login(){
       })
       localStorage.setItem("token", data.token)
       localStorage.setItem("userKind", data.userKind)
+      localStorage.setItem("userState", data.userState)
 
 
       if (data.userKind === "admin") {
         history.push("/createuser")
-      } else if (data.userKind === "user") {
+      } else if (data.userKind === "user" && data.userState === "activo") {
         history.push("/contents")
       } else {
         history.push("/")

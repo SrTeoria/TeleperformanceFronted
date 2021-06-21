@@ -21,23 +21,22 @@ function PrivateRoute({ children, ...rest }) {
   );
 }
 
-
 function App() {
   return (
     <Router history={history}>
       <Switch>
-            <PrivateRoute exact path='/createuser'>
-              <CreateUser/>
-            </PrivateRoute>
-            <PrivateRoute exact path='/contents'>
-              <Contents/>
-            </PrivateRoute>
-            <PrivateRoute exact path='/userlist'>
-              <UserList/>
-            </PrivateRoute>
-            <PrivateRoute exact path='/edituser/:userId'>
-              <EditUser/>
-            </PrivateRoute>
+          <PrivateRoute exact path='/createuser'>
+            <CreateUser/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/contents'>
+            <Contents/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/userlist'>
+            <UserList/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/edituser/:userId'>
+            <EditUser/>
+          </PrivateRoute>
           <Route exact path='/'>
             <Login/>
           </Route>
